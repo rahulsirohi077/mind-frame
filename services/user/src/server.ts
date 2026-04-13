@@ -1,0 +1,29 @@
+import express from 'express';
+import dotenv from 'dotenv';
+import connectDb from './utils/db.js';
+import userRoutes from './routes/user.js'
+import { errorHandler, notFoundHandler } from './middlewares/error.js';
+import { v2 as cloudinary } from 'cloudinary'
+
+dotenv.config();
+
+cloudinary.config({ 
+  cloud_name: process.env.Cloud_Name, 
+  api_key: process.env.Cloud_Api_Key, 
+  api_secret: process.env.Cloud_Api_Secret
+});
+
+const app = express();
+app.use(express.json());
+
+connectDb();
+
+app.use("/api/v1", userRoutes);
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+const port = process.env.PORT;
+
+app.listen(port, ()=>{
+    console.log(`Server is running on http://localhost:${port}`);
+})
