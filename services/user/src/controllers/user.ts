@@ -1,11 +1,10 @@
-import { Request, Response } from "express";
-import catchAsync from "../utils/catchAsync.js";
-import User from "../models/User.js";
+import { v2 as cloudinary } from 'cloudinary';
 import jwt from 'jsonwebtoken';
 import { AuthenticatedRequest } from "../middlewares/isAuth.js";
+import User from "../models/User.js";
 import AppError from "../utils/AppError..js";
+import catchAsync from "../utils/catchAsync.js";
 import getBuffer from "../utils/dataUri.js";
-import { v2 as cloudinary } from 'cloudinary'
 
 export const loginUser = catchAsync(async(req,res) => {
     const { email, name, image } = req.body;
@@ -77,7 +76,6 @@ export const updateUser = catchAsync(async(req: AuthenticatedRequest,res)=>{
 })
 
 export const updateProfilePic = catchAsync(async(req:AuthenticatedRequest,res)=>{
-    console.log("hello")
     const file = req.file;
 
     if(!file) {
