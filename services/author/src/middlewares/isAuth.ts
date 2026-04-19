@@ -36,5 +36,6 @@ export const isAuth = catchAsync(async (req:AuthenticatedRequest, res:Response, 
         next();
     } catch (error) {
         throw new AppError("Please Login - Jwt Error", 401);
+        // throw new AppError((error as Error).message, 401);
     }
 })
