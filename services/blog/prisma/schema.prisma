@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Blog {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  description String   @db.VarChar(255)
+  blogcontent String
+  image       String   @db.VarChar(255)
+  category    String   @db.VarChar(255)
+  author      String   @db.VarChar(255)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("blog")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  comment   String   @db.VarChar(255)
+  userid    String   @db.VarChar(255)
+  username  String   @db.VarChar(255)
+  blogId    String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("comments")
+}
+
+model SavedBlog {
+  id        Int      @id @default(autoincrement())
+  userid    String   @db.VarChar(255)
+  blogId    String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("savedblogs")
+}
