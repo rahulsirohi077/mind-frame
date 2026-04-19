@@ -1,8 +1,7 @@
-import express from 'express';
+import express from "express";
 import dotenv from 'dotenv';
-import connectDb from './utils/db.js';
-import userRoutes from './routes/user.js'
-import { errorHandler, notFoundHandler } from './middlewares/error.js';
+import blogRoutes from './routes/blog.js'
+import { errorHandler, notFoundHandler } from "./middlewares/error.js";
 import { v2 as cloudinary } from 'cloudinary'
 
 dotenv.config();
@@ -15,19 +14,17 @@ cloudinary.config({
 
 const app = express();
 app.use(express.json());
-
-connectDb();
+app.use(express.urlencoded({ extended: true }));
+const port = Number(process.env.PORT);
 
 app.get("/health", (_request, response) => {
   response.status(200).json({ status: "ok" });
 });
 
-app.use("/api/v1", userRoutes);
+app.use("/api/v1", blogRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-const port = process.env.PORT;
-
-app.listen(port, ()=>{
-    console.log(`Server is running on http://localhost:${port}`);
-})
+app.listen(port, () => {
+  console.log(`Author service running on  http://localhost:${port}`);
+});
